@@ -2,11 +2,10 @@ import { FormProvider as RHFormProvider } from "react-hook-form";
 import styled from "styled-components";
 const CustomForm = styled.div`
   background: rgba(0, 0, 0, 0.1);
-  height: 400px;
   z-index: 9999;
   padding: 40px;
   position: relative;
-  top: 100px
+  border-radius: 10px
 `;
 function FormProvider({ children, onSubmit, methods }) {
   return (
