@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
-const POST_PER_PAGE = 3
+import { toast } from "react-toastify";
+const POST_PER_PAGE = 3;
 const initialState = {
   isLoading: false,
   error: null,
@@ -23,8 +24,9 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = null;
       const newPost = action.payload;
-      if (state.currentPagePost.length % POST_PER_PAGE ===0) state.currentPagePost.pop()
-      state.postsById[newPost._id] = newPost
+      if (state.currentPagePost.length % POST_PER_PAGE === 0)
+        state.currentPagePost.pop();
+      state.postsById[newPost._id] = newPost;
       state.currentPagePost.unshift(newPost._id);
     },
     getPostSuccess(state, action) {
@@ -37,6 +39,12 @@ const slice = createSlice({
           state.currentPagePost.push(post._id);
       });
       state.totalPosts = count;
+    },
+    sendPostReactionSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { postId, reactions } = action.payload;
+      state.postsById[postId].reactions = reactions;
     },
   },
 });
@@ -65,10 +73,32 @@ export const getPosts =
         page,
         limit,
       };
-      const res = await apiService.get(`/posts/user/${userId}`, {params});
+      const res = await apiService.get(`/posts/user/${userId}`, { params });
       dispatch(slice.actions.getPostSuccess(res.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error.message));
+    }
+  };
+
+export const sendPostReaction =
+  ({ postId, emoji }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await apiService.post(`/reactions`, {
+        targetType: "Post",
+        targetId: postId,
+        emoji,
+      });
+      dispatch(
+        slice.actions.sendPostReactionSuccess({
+          postId,
+          reactions: response.data,
+        })
+      );
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
     }
   };
 
