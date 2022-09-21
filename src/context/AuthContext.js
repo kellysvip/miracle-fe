@@ -1,4 +1,4 @@
-import { SettingsAccessibilityOutlined } from "@mui/icons-material";
+
 import { createContext, useReducer, useEffect } from "react";
 import apiService from "../app/apiService";
 import { isValidToken } from "../utils/jwt";
@@ -21,11 +21,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
+        isInitialized: true,
         user: action.payload.user,
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
+        isInitialized: true,
         isAuthenticated: true,
         user: action.payload.user,
       };
@@ -42,6 +44,43 @@ const reducer = (state, action) => {
         isInitialized: true,
         isAuthenticated,
         user,
+      };
+      case UPDATE_PROFILE:
+      const {
+        name,
+        avatarUrl,
+        coverUrl,
+        aboutMe,
+        city,
+        country,
+        company,
+        jobTitle,
+        facebookLink,
+        instagramLink,
+        linkedinLink,
+        twitterLink,
+        friendCount,
+        postCount,
+      } = action.payload;
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name,
+          avatarUrl,
+          coverUrl,
+          aboutMe,
+          city,
+          country,
+          company,
+          jobTitle,
+          facebookLink,
+          instagramLink,
+          linkedinLink,
+          twitterLink,
+          friendCount,
+          postCount,
+        },
       };
 
     default:

@@ -1,15 +1,14 @@
-import { Grid } from "@mui/material";
-import { Stack } from "@mui/system";
-import React from "react";
-import useAuth from "../../hooks/useAuth";
-import PostForm from "../posts/PostForm";
-import PostList from "../posts/PostList";
+import { Grid, Stack } from "@mui/material";
 import ProfileAbout from "./ProfileAbout";
-import ProfileScorecard from "./ProfileScorecard";
 import ProfileSocialInfo from "./ProfileSocialInfo";
+import PostForm from "../posts/PostForm";
+import ProfileScorecard from "./ProfileScorecard";
+import PostList from "../posts/PostList";
+import useAuth from "../../hooks/useAuth";
 
-const Profile = ({ profile }) => {
+function Profile({ profile }) {
   const { user } = useAuth();
+  console.log(profile._id)
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
@@ -19,14 +18,16 @@ const Profile = ({ profile }) => {
           <ProfileSocialInfo profile={profile} />
         </Stack>
       </Grid>
+
       <Grid item xs={12} md={8}>
         <Stack spacing={3}>
           {user._id === profile._id && <PostForm />}
           <PostList userId={profile._id} />
+          {console.log('profile._id', profile._id)}
         </Stack>
-      </Grid>{" "}
+      </Grid>
     </Grid>
   );
-};
+}
 
 export default Profile;
