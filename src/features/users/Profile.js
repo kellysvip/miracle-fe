@@ -8,7 +8,6 @@ import useAuth from "../../hooks/useAuth";
 
 function Profile({ profile }) {
   const { user } = useAuth();
-  console.log(profile._id)
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
@@ -23,7 +22,7 @@ function Profile({ profile }) {
         <Stack spacing={3}>
           {user._id === profile._id && <PostForm />}
           <PostList userId={profile._id} />
-          {console.log('profile._id', profile._id)}
+         
         </Stack>
       </Grid>
     </Grid>

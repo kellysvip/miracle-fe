@@ -7,12 +7,18 @@ import PostCard from "./PostCard";
 import { getPosts } from "./postSlice";
 
 const PostList = ({ userId }) => {
-  const [page, setPage] = useState(1);
-  const { currentPagePost, postsById, totalPosts, isLoading } = useSelector((state) => state.post);
-  const posts = currentPagePost.map((postId) => postsById[postId])
   const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+
+  const { currentPagePost, postsById, totalPosts, isLoading } = useSelector(
+    (state) => state.post
+  );
+
+  const posts = currentPagePost.map((postId) => postsById[postId]);
   useEffect(() => {
-    if (userId) dispatch(getPosts({ userId, page,  }));
+    if (userId) {
+      dispatch(getPosts({ userId, page }));
+    }
   }, [userId, page, dispatch]);
 
   return (

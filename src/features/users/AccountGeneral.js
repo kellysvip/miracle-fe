@@ -1,15 +1,16 @@
-import React from "react";
-import { Box, Grid, Card, Stack } from "@mui/material";
+import React, { useCallback } from "react";
+import { Box, Grid, Card, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import useAuth from "../../hooks/useAuth";
 // import { cloudinaryUpload } from "../../utils/cloudinary";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, FTextField } from "../../components/form";
+import { FormProvider, FTextField, FUploadAvatar } from "../../components/form";
 // import { fData } from "../../utils/numberFormat";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserProfile } from "./userSlice";
+import { fData } from "../../utils/numberFormat";
 
 const UpdateUserSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -39,6 +40,7 @@ function AccountGeneral() {
   });
   const {
     handleSubmit,
+    setValue,
     formState: { isSubmitting },
   } = methods;
 
@@ -47,12 +49,46 @@ function AccountGeneral() {
   const onSubmit = (data) => {
     dispatch(updateUserProfile({ userID: user._id, ...data }));
   };
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        setValue(
+          "avatarUrl",
+          Object.assign(file, { preview: URL.createObjectURL(file) })
+        );
+      }
+    },
+    [setValue]
+  );
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
-          <Card sx={{ py: 10, px: 3, textAlign: "center" }}></Card>
+          <Card sx={{ py: 10, px: 3, textAlign: "center" }}>
+          <FUploadAvatar
+              name="avatarUrl"
+              accept="image/*"
+              maxSize={3145728}
+              onDrop={handleDrop}
+              helperText={
+                <Typography
+                  variant="caption"
+                  sx={{
+                    mt: 2,
+                    mx: "auto",
+                    display: "block",
+                    textAlign: "center",
+                    color: "text.secondary",
+                  }}
+                >
+                  Allowed *.jpeg, *.jpg, *.png, *.gif
+                  <br /> max size of {fData(3145728)}
+                </Typography>
+              }
+            />
+          </Card>
         </Grid>
 
         <Grid item xs={12} md={8}>

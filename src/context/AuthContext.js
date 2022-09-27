@@ -1,5 +1,5 @@
-
 import { createContext, useReducer, useEffect } from "react";
+import { useSelector } from "react-redux";
 import apiService from "../app/apiService";
 import { isValidToken } from "../utils/jwt";
 
@@ -21,13 +21,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        isInitialized: true,
         user: action.payload.user,
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isInitialized: true,
         isAuthenticated: true,
         user: action.payload.user,
       };
@@ -35,6 +33,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
+
         user: null,
       };
     case INITIALIZE:
@@ -45,7 +44,7 @@ const reducer = (state, action) => {
         isAuthenticated,
         user,
       };
-      case UPDATE_PROFILE:
+    case UPDATE_PROFILE:
       const {
         name,
         avatarUrl,
@@ -95,13 +94,15 @@ const setSession = (accessToken) => {
     window.localStorage.setItem("accessToken", accessToken);
     apiService.defaults.headers.common.Authorization = `Bearer ${accessToken}`; // protocol jwt
   } else {
-    window.localStorage.removeItem(accessToken);
+    window.localStorage.removeItem("accessToken");
     delete apiService.defaults.headers.common.Authorization;
   }
 };
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const updatedProfile = useSelector((state) => state.user.updatedProfile);
+
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -110,14 +111,19 @@ export function AuthProvider({ children }) {
           setSession(accessToken);
           const res = await apiService.get("/users/me");
           const user = res.data;
+
           dispatch({
             type: INITIALIZE,
             payload: { isAuthenticated: true, user },
           });
+        } else {
+          dispatch({
+            type: INITIALIZE,
+            payload: { isAuthenticated: false, user: null },
+          });
         }
       } catch (error) {
         setSession(null);
-
         dispatch({
           type: INITIALIZE,
           payload: { isAuthenticated: false, user: null },
@@ -155,6 +161,11 @@ export function AuthProvider({ children }) {
     });
     callback();
   };
+
+  useEffect(() => {
+    if (updatedProfile)
+      dispatch({ type: UPDATE_PROFILE, payload: updatedProfile });
+  }, [updatedProfile]);
 
   return (
     <AuthContext.Provider value={{ ...state, login, register, logout }}>

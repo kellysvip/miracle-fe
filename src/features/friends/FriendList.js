@@ -15,7 +15,7 @@ import SearchInput from "../../SearchInput";
 
 function FriendList() {
   const [filterName, setFilterName] = useState("");
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
 
   const { currentPageUsers, usersById, totalUsers, totalPages } = useSelector(
     (state) => state.friend

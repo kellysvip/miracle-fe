@@ -8,8 +8,9 @@ import { Card } from "@mui/material";
 import { alpha, Box, Stack } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch } from "react-redux";
-import { createPost } from "./postSlice";
+import { changePost, getPosts } from "./postSlice";
 import { FUploadImage } from "../../components/form";
+
 const postSchema = Yup.object().shape({
   content: Yup.string().required("Content is required"),
 });
@@ -19,7 +20,7 @@ const defaultValues = {
   image: "",
 };
 
-const PostForm = () => {
+const PostFormChange = ({ postId, userId }) => {
   const methods = useForm({
     resolver: yupResolver(postSchema),
     defaultValues,
@@ -33,8 +34,10 @@ const PostForm = () => {
   } = methods;
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    console.log("data", data);
-    dispatch(createPost(data)).then(() => reset());
+    dispatch(changePost(postId, data))
+      .then(() => reset())
+      .then(dispatch(getPosts({ userId })))
+      .then(dispatch(getPosts({ userId })))
   };
 
   const handleDrop = useCallback(
@@ -54,6 +57,9 @@ const PostForm = () => {
     <Card sx={{ p: 3 }}>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
+          <FTextField name="postId" sx={{ display: "none" }}>
+            {postId}
+          </FTextField>
           <FTextField
             name="content"
             multiline
@@ -96,4 +102,4 @@ const PostForm = () => {
   );
 };
 
-export default PostForm;
+export default PostFormChange;

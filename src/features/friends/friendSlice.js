@@ -142,6 +142,23 @@ export const getFriendRequests =
     }
   };
 
+  export const getFriendRequestsSend =
+  ({ filterName, page = 1, limit = 12 }) =>
+  async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const params = { page, limit };
+      if (filterName) params.name = filterName;
+      const response = await apiService.get("/friends/requests/outgoing", {
+        params,
+      });
+      dispatch(slice.actions.getFriendRequestsSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.message));
+      toast.error(error.message);
+    }
+  };
+  
 export const sendFriendRequest = (targetUserId) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {

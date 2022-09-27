@@ -18,12 +18,10 @@ function UserProfilePage() {
   );
 
 
-
   useEffect(() => {
     if (userId) {
       dispatch(getUser(userId));
     }
-    
   }, [dispatch, userId]);
 
   return (
