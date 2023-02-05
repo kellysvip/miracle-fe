@@ -1,0 +1,49 @@
+.wrapper {
+    display: flex;
+    padding-left: 12px;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.12);
+    position: relative;
+    border: 1.5px solid transparent;
+    .input {
+        padding: 8px 12px;
+        background-color: transparent;
+        &:not(:placeholder-shown) ~ .search-icon {
+            color: var(--black-color);
+        }
+    }
+    &:focus-within {
+        border: 1.5px solid var(--grey-color);
+    }
+    .clear-btn {
+        background-color: transparent;
+        position: absolute;
+        top: 50%;
+        right: 39px;
+        transform: translateY(-50%);
+    }
+    .search-btn {
+        padding: 0 12px;
+        background-color: transparent;
+        color: var(--grey-color);
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+        &:hover {
+            background-color: rgba(22, 24, 35, 0.06);
+        }
+    }
+}
+
+.search-popper {
+    width: 238px;
+    background-color: var(--white-color);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12);
+    border-radius: var(--border-radius);
+    padding: 8px 0;
+    .search-popper-title{
+        padding: 8px;
+        color: var(--grey-color);
+        font-size: 12px;
+        font-weight: 300;
+    }
+}

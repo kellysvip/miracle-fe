@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const MainFooter = () => {
   return (
     <Typography variant="body2" color="text.secondary" align="center" p={1}>
-      {"Copuright @"}
-      <Link  color="inherit" href="https://www.coderschool.vn/en/">
-        CoderSchool
+      {"Copyright @"}
+      <Link  color="inherit" href="https://www.facebook.com/tri.nguyenhuu.3979">
+        Kelly
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}

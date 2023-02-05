@@ -1,0 +1,44 @@
+.wrapper {
+    padding: 20px 40px;
+    z-index: 1;
+    .label {
+        color: var(--primary-color);
+        font-size: 24px;
+        font-weight: 300;
+        padding-left: 20px;
+        padding-bottom: 10px;
+    }
+    .image {
+        padding: 20px;
+    }
+    .drop-image {
+        margin: 20px 0;
+    }
+}
+
+.modal-image {
+    cursor: auto !important;
+    position: fixed;
+    top: 20%;
+    animation: scaleTo linear 0.3s;
+}
+
+.close-btn {
+    position: fixed;
+    font-size: 30px;
+    background-color: transparent;
+    bottom: 0;
+    right: 40%;
+    color: var(--primary-color);
+    cursor: pointer;
+    z-index: 1;
+}
+
+@keyframes scaleTo{
+	from {
+    	transform: scale(50%);
+    }
+    to {
+    	transform: scale(100%);
+    }
+}

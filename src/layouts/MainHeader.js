@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/Logo";
-import { Avatar, Divider } from "@mui/material";
+import { Avatar, Divider, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 function MainHeader() {
   const { user, logout } = useAuth();
@@ -22,9 +22,7 @@ function MainHeader() {
   const handleLogout = async () => {
     try {
       handleMenuClose();
-      await logout(() => {
-       
-      });
+      await logout(() => {});
     } catch (error) {
       console.log(error);
     }
@@ -56,6 +54,15 @@ function MainHeader() {
       </Box>
 
       <Divider sx={{ boderyStyle: "dashed" }} />
+      <MenuItem
+        onClick={handleMenuClose}
+        to="/newfeed"
+        component={RouterLink}
+        sx={{ mx: 1 }}
+      >
+        {" "}
+        NewFeeds
+      </MenuItem>
 
       <MenuItem
         onClick={handleMenuClose}
@@ -75,12 +82,18 @@ function MainHeader() {
         {" "}
         Account
       </MenuItem>
-
-      <Divider sx={{ boderyStyle: "dashed" }} />
       <MenuItem
-        onClick={handleLogout}
+        onClick={handleMenuClose}
+        to="/dashboard"
+        component={RouterLink}
         sx={{ mx: 1 }}
       >
+        {" "}
+        Dashboard
+      </MenuItem>
+
+      <Divider sx={{ boderyStyle: "dashed" }} />
+      <MenuItem onClick={handleLogout} sx={{ mx: 1 }}>
         {" "}
         Log out
       </MenuItem>
@@ -97,12 +110,15 @@ function MainHeader() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            href="/newfeed"
           >
             <Logo />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CoderComm
-          </Typography>
+          <Link href="/newfeed" sx={{textDecoration: "none", color: "black"}}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              MIRACLE
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             <Avatar

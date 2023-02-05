@@ -18,6 +18,7 @@ const UpdateUserSchema = yup.object().shape({
 
 function AccountGeneral() {
   const { user } = useAuth();
+  console.log('user', user);
   const isLoading = useSelector((state) => state.user.isLoading);
 
   const defaultValues = {

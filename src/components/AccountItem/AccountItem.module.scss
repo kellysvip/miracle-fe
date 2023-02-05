@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.06);
+        animation: background-color ease-in-out 200ms;
+    }
+    .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+    .info {
+        display: flex;
+        align-items: center;
+        .name {
+            font-size: 14px;
+            margin: 0 8px;
+        }
+        .tick-icon {
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+    }
+}

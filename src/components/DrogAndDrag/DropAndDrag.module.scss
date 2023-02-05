@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
+    height: 300px;
+    border: 4px dashed var(--primary-color);
+    .message {
+        text-align: center;
+        color: var(--primary-color);
+        font-size: 20px;
+        .upload-icon {
+            width: 50px;
+            height: 50px;
+        }
+    }
+}
