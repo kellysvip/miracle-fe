@@ -32,7 +32,7 @@ function CustomSidebar() {
       <AccountItem
         className={"hover-radius"}
         data={{
-          full_name: "Nguyễn Thành Phát",
+          full_name: "Tri",
           tick: true,
           avatar:
             "https://i.pinimg.com/736x/54/3c/5b/543c5b8a969e15d87928cb60f817eab1.jpg",
