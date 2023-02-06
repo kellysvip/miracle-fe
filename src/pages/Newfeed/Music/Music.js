@@ -55,7 +55,7 @@ function NewMusic() {
                 <div ref={playListRef} className={css('play-list')}>
                     <table
                         onMouseOver={() => {
-                            playListRef.current.style.overflowY = 'overlay';
+                            playListRef.current.style.overflowY = 'scroll';
                         }}
                         onMouseLeave={() => {
                             playListRef.current.style.overflowY = 'hidden';
