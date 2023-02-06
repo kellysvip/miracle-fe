@@ -43,10 +43,14 @@
             margin: 20px;
             box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.12);
             border-radius: 10px;
+            &::-webkit-scrollbar{
+		        width: 0;
+	        }
             table {
                 width: 100%;
                 border-collapse: collapse;
                 border: none;
+                
                 tr {
                     text-align: left;
                     cursor: pointer;
@@ -68,6 +72,11 @@
                     th:first-child {
                         text-align: center;
                     }
+                }
+                thead th{
+                    position: sticky;
+                    top: 0px;
+                    background-color: var(--white-color);
                 }
             }
         }
